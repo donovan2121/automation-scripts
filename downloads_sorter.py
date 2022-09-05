@@ -13,7 +13,7 @@ def check_dir():
     for dir in dir_file_dict.keys():
         path_dir = Path.cwd() / dir
         if path_dir.exists() and path_dir.is_dir():
-            print(f'The {dir} exists.')
+            print(f'The {dir} folder exists.')
         else:
             path_dir.mkdir()
             print(f'The {dir} has been created.')
@@ -26,13 +26,15 @@ def find_files(path):
                 # create a dict type with keys image,video,audio,
                 found_files.setdefault(path / dir_name, file_list)
 
-# def move_files(found_files):
-#     if len(found_files):
-#         for file_type in found_files:
-#             for file in file_type:
-#                 shutil.move()
+def move_files(found_files, path):
+    if len(found_files):
+        for dir_name, files in found_files.items():
+            for file in files:
+                shutil.copy(str(file), str(path / dir_name))
+                print(f'Copying {file.name} to {dir_name}')
 
 check_dir()
 find_files(Path.cwd())
-print(found_files)
+move_files(found_files, Path.cwd())
+
 
