@@ -30,8 +30,13 @@ def move_files(found_files, path):
     if len(found_files):
         for dir_name, files in found_files.items():
             for file in files:
-                shutil.copy(str(file), str(path / dir_name))
-                print(f'Copying {file.name} to {dir_name}')
+                try:
+                    shutil.move(str(file), str(path / dir_name / file.name))
+                    print(f'Copying {file.name} to {dir_name}')
+                except shutil.Error:
+                    print(f'{file} already exists in destination path')
+
+                
 
 check_dir()
 find_files(Path.cwd())
